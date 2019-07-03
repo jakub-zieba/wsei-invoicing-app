@@ -1,0 +1,63 @@
+<table class="invoice-receiver">
+    <h4>
+      invoice-receiver
+    </h4>
+    <tr>
+      <td>
+        <p>Company name</p>
+        <input
+          class="form-control" type="text"
+          name="name"
+          [value]=position.name
+          (keyup)=handleAutocompleteCompanyName($event)
+        />
+        <ul class="single-position__suggestion-list" *ngIf="suggestions.length > 0">
+          <li class="single-position__suggestion-item" *ngFor="let suggestion of suggestions" (click)=selectSuggestion(suggestion)>{{ suggestion.label }}</li>
+        </ul>
+      </td>
+      <td>
+        <p>Company ID</p>
+        <input
+          class="form-control" type="text"
+          name="name"
+          autocomplete="off"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Company address</p>
+        <input
+          class="form-control" type="text"
+          name="name"
+          autocomplete="off"
+        />
+      </td>
+      <td>
+        <p>Company telephone</p>
+        <input
+          class="form-control" type="text"
+          name="name"
+          autocomplete="off"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Company mail</p>
+        <input
+          class="form-control" type="text"
+          name="name"
+          autocomplete="off"
+        />
+      </td>
+      <td>
+        <p>Company name</p>
+        <input
+          class="form-control" type="text"
+          name="name"
+          autocomplete="off"
+        />
+      </td>
+    </tr>
+</table>

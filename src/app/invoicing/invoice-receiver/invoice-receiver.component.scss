@@ -1,0 +1,23 @@
+.single-position {
+
+    &__suggestion-list {
+        position: absolute;
+        border: 2px black solid;
+        padding: 5px;
+        padding-left: 30px;
+        list-style: circle;
+        min-width: 300px;
+    }
+
+    &__suggestion-item {
+        &::hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.invoice-receiver {
+  background: white;
+  padding: 40px;
+  margin: 40px;
+}
