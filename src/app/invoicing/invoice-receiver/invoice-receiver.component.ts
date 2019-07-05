@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpItemCatalog } from '../model/invoice-receivers-catalog/invoice-receivers-catalog.module'
-import { ItemCatalog } from '../model/invoice-receivers-catalog/item-catalog'
+import { LocalItemCatalog } from '../model/item-catalog/local-item-catalog'
 import { Subject } from 'rxjs';
 import { debounceTime, switchMap, tap, map, retry, filter } from 'rxjs/operators';
 import { Item } from '../model/item-catalog/item';
+
+interface ItemSuggestion {
+  name: string;
+  label: string;
+}
 
 @Component({
   selector: 'app-invoice-receiver',
@@ -13,6 +17,10 @@ import { Item } from '../model/item-catalog/item';
 export class InvoiceReceiverComponent implements OnInit {
   readonly WAIT_TIME_BEFORE_SEARCH = 400;
   readonly MINIMAL_QUERY_LENGTH = 3;
+
+  private name: String
+  suggestions: ItemSuggestion[] = [];
+
 
   private searchQuery = new Subject<string>();
   private searchResult = this.searchQuery.pipe(
@@ -24,9 +32,12 @@ export class InvoiceReceiverComponent implements OnInit {
       retry(3),
   );
 
-  constructor(private itemsCatalog: ItemCatalog) { }
+  constructor(private itemsCatalog: LocalItemCatalog) { }
 
   ngOnInit() {
+    this.searchResult.subscribe((items) => {
+      this.suggestions = items;
+    });
   }
 
   handleAutocompleteCompanyName($event: any): void {
@@ -36,9 +47,14 @@ export class InvoiceReceiverComponent implements OnInit {
   toAnotherForm(data: Item[]): ItemSuggestion[] {
     return data.map(i => {
       return {
-        name: i.data.krs_podmioty.nazwa,
-        label: i.data.krs_podmioty.nazwa
+        name: i.name,
+        label: i.name
       };
     });
+  }
+
+  selectSuggestion(item: ItemSuggestion): void {
+    this.name = item.name;
+    this.suggestions = [];
   }
 }

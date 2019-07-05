@@ -24,9 +24,9 @@ import { InvoiceReceiverComponent } from './invoice-receiver/invoice-receiver.co
     {
       provide: PriceCalculator, useFactory: () => new PriceCalculator()
     },
-    // {
-    //   provide: ItemCatalog, useFactory: () => new LocalItemCatalog()
-    // }
+    {
+      provide: LocalItemCatalog, useFactory: () => new LocalItemCatalog()
+    },
     {
       provide: ItemCatalog, useFactory: (http: HttpClient) => new HttpItemCatalog(http), deps: [HttpClient]
     }
